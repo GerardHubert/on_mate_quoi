@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+
+	<div class="genres-select">
+		<label for="genres-select">Choisis un genre, et dis nous ce que t'as envie de mater</label>
+		<select
+			name="genres" id="genres-select">{# {% for genre in genres %}
+												<option value={genre.id}>{{ genre.name }}</option>
+											{% endfor %} #}
+		</select>
+		<button class="genres-select-submit">Choisir</button>
+	</div>
+{% endblock %}

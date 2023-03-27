@@ -14,6 +14,6 @@ class Requests
 
   public function get(): array
   {
-    return $this->get;
+    return filter_var_array($this->get);
   }
 }

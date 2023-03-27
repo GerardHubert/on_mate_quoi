@@ -1,5 +1,5 @@
 {
-    "name": "gerard/quotes_crawler",
+    "name": "gerard/on_mate_quoi",
     "autoload": {
         "psr-4": {
             "App\\": "src/"
@@ -15,8 +15,9 @@
         "twig/twig": "^3.5"
     },
     "require-dev": {
+        "vlucas/phpdotenv": "^5.5",
+        "friendsofphp/php-cs-fixer": "^3.15",
         "filp/whoops": "^2.15",
-        "phpstan/phpstan": "^1.10",
-        "friendsofphp/php-cs-fixer": "^3.15"
+        "phpstan/phpstan": "^1.10"
     }
 }
