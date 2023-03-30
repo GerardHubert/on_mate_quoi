@@ -20,12 +20,30 @@ class GenreRepository
     $apiId = $genre->getGenreApiId();
 
     $query = $this->database->prepare(
-      "INSERT INTO genres (name, api_id) VALUES (:name, :apiId)"
+      "INSERT INTO genres (name, genre_api_id) VALUES (:name, :apiId)"
     );
 
-    $query->bindParam('name', $name);
-    $query->bindParam('apiId', $apiId);
+    $query->bindParam(':name', $name);
+    $query->bindParam(':apiId', $apiId);
 
     return $query->execute();
+  }
+
+  public function findAll(): false|array // mode union-type
+  {
+    $request = $this->database->prepare("SELECT * FROM genres");
+    $request->setFetchMode(PDO::FETCH_CLASS, Genre::class);
+    $request->execute();
+
+    return $request->fetchAll();
+  }
+  public function findOneByApiId(int $id): ?Genre
+  {
+    $request = $this->database->prepare("SELECT * FROM genres WHERE genre_api_id = :apiId");
+    $request->bindParam(':apiId', $id);
+    $request->setFetchMode(PDO::FETCH_CLASS, Genre::class);
+    $request->execute();
+
+    return $request->fetch();
   }
 }

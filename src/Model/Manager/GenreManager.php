@@ -22,4 +22,14 @@ class GenreManager
       $this->genreRepository->saveGenre($genre);
     }
   }
+
+  public function getGenres(): bool|array
+  {
+    return $this->genreRepository->findAll();
+  }
+
+  public function getOneGenre(int $apiId): ?Genre
+  {
+    return $this->genreRepository->findOneByApiId($apiId);
+  }
 }

@@ -1,14 +1,39 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-
-	<div class="genres-select">
-		<label for="genres-select">Choisis un genre, et dis nous ce que t'as envie de mater</label>
-		<select
-			name="genres" id="genres-select">{# {% for genre in genres %}
-												<option value={genre.id}>{{ genre.name }}</option>
-											{% endfor %} #}
-		</select>
-		<button class="genres-select-submit">Choisir</button>
-	</div>
+	<header>
+		<h1 class="app-title">On mate quoi ?</h1>
+		<p class="app-explanations">T'as envie de te faire un film, mais tu ne sais pas trop quoi regarder ? Pas de souci, on t'oriente. Laisse toi guider</p>
+		<form method="post" action="http://localhost:8000?action=select-genre" class="genres-select-form">
+			<label for="genres-select">Choisis un genre, et dis nous ce que t'as envie de mater</label>
+			<div class="genre-select-widget">
+				<select class='genres-select' name="genres" id="genres-select">
+					{% for genre in genres %}
+						<option class='genres-select-option' value={{ genre.genre_api_id }}>{{ genre.name }}</option>
+					{% endfor %}
+				</select>
+				<button class="genres-select-submit">Choisir</button>
+			</div>
+		</form>
+	</header>
+	<section class="actual-films-section">
+		<h2 class="actual-films-section-title">Les films sortis récemment</h2>
+		<div class="results-container">
+			{% for film in actualFilms %}
+				<a href="http://localhost:8000?action=details&id={{film.id}}">
+					<div class="card-container">
+						<i class="fa-solid fa-magnifying-glass"></i>
+						<img class="card-poster" src="https://image.tmdb.org/t/p/w200/{{film.poster_path}}" alt="affiche de {{ film.title }}">
+						<div class="card-details">
+							<h3 class="card-film-title">{{ film.title }}</h3>
+							<input type="hidden" value={{ film.id }}>
+							<div class="vote-average-container">
+								<span class="vote_average">{{ film.vote_average }}</span>
+							</div>
+						</div>
+					</div>
+				</a>
+			{% endfor %}
+		</div>
+	</section>
 {% endblock %}

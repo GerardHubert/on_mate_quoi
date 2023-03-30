@@ -15,6 +15,12 @@ final class Genre
     return $this->id;
   }
 
+  public function setGenreApiId($genreApiId): self
+  {
+    $this->genreApiId = $genreApiId;
+    return $this;
+  }
+
   public function getGenreApiId(): int
   {
     return $this->genreApiId;
@@ -25,11 +31,6 @@ final class Genre
     return $this->genreName;
   }
 
-  public function setGenreApiId($genreApiId): self
-  {
-    $this->genreApiId = $genreApiId;
-    return $this;
-  }
 
   public function setGenreName($genreName): self
   {

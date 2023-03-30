@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	<section class="genres-results">
+		<h2>Les plus populaires en ce moment dans le genre "{{ genre.name }}"</h2>
+		<div class="results-container">
+			{% for film in films %}
+				<div class="card-container">
+					<img class="card-poster" src="https://image.tmdb.org/t/p/w200{{ film.poster_path }}" alt="affiche de {{ film.title }}">
+					<div class="card-details">
+						<h3 class="card-film-title">{{ film.title }}</h3>
+						<div class="vote-average-container">
+							<span class="vote_average">{{ film.vote_average }}</span>
+						</div>
+						{# <i class="fa-solid fa-magnifying-glass"></i> #}
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</section>
+{% endblock %}
