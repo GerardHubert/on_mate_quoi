@@ -1,0 +1,23 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	<section class="best-rated">
+		<h2 class="best-rated-section-title">Les films les mieux notés</h2>
+		{% for genre, film in top %}
+			<div class="genre-row">
+				<h3 class="genre-row-title">{{ genre.id }}</h3>
+				{% for item in film %}
+					{% if loop.index0 < 7 %}
+						<a href="http://localhost:8000?action=details&id={{item.id}}">
+							<div class="card-top-rated">
+								<img class="thumbnail" src="https://image.tmdb.org/t/p/w200/{{item.poster_path}}" alt="poster de {{ item.title }}">
+								<span class="card-top-rated-title">{{ item.title }}</span>
+								<input type="hidden" name="film_id" value={{item.id}}>
+							</div>
+						</a>
+					{% endif %}
+				{% endfor %}
+			</div>
+		{% endfor %}
+	</section>
+{% endblock %}

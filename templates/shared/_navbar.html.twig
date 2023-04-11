@@ -1,5 +1,21 @@
 <nav class="navbar">
 	<div class="nav-items-container">
-		<img class="nav-logo" src="images/favicon.ico" alt="clap de cinema">
+		<div class="nav-link-wrapper">
+			<a href="http://localhost:8000?action=home">
+				<img class="nav-logo" src="images/favicon.ico" alt="clap de cinema">
+			</a>
+			<a href="http://localhost:8000?action=best-rated" class="nav-link">
+				<span class="nav-item">Les mieux notés</span>
+			</a>
+			<a href="http://localhost:8000?action=most-popular" class="nav-link">
+				<span class="nav-item">Les plus populaires</span>
+			</a>
+		</div>
+		<form class="search" method="post" action="http://localhost:8000?action=query">
+			<input type="text" name="search" id="search" class="search-input" placeholder="Rechercher un film"/>
+			<button class="search-submit-button" type="submit">
+				<i class="fa-solid fa-magnifying-glass loupe"></i>
+			</button>
+		</form>
 	</div>
 </nav>

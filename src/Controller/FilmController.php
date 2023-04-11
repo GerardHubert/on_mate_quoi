@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\Genre;
+use App\Model\Manager\GenreManager;
 use App\Services\Http\Session;
 use App\View\View;
 
@@ -21,11 +23,10 @@ class FilmController
   }
 
   // méthode pour montrer les détails d'un film
-  public function showOne(array $route)
+  public function showOne(array $route): void
   {
     // on récupère l'id du film délectionné
     $id = $route['id'];
-    var_dump($id);
 
     // requête pur récupérer les détails
     $detailsUrl = "https://api.themoviedb.org/3/movie/" . $id . "?api_key=" . $this->key . "&language=fr-FR";
@@ -76,9 +77,89 @@ class FilmController
     $videos = json_decode($data2, true);
     $credits = json_decode($data3, true);
 
-    var_dump($details);
+    if (!empty($videos['results'])) {
+      $lastTrailer = array_splice($videos['results'], 0, 1);
+    } else {
+      $lastTrailer[0] = "";
+    }
 
+    $this->view->render('film_details.html.twig', [
+      "details" => $details,
+      "lastTrailer" => $lastTrailer[0],
+      "videos" => $videos['results'],
+      "cast" => $credits['cast'],
+      "crew" => $credits['crew']
+    ]);
+  }
 
-    return $this->view->render('film_details.html.twig', []);
+  // afficher les 7 films les mieux notés de chaque genre
+  public function showBestRated(GenreManager $genreManager): void
+  {
+    //récupérer les genres
+    $genres = $genreManager->getGenres();
+
+    // récupérer les films les mieux notés pour chaque genre
+    $bestOfEachGenre = [];
+
+    foreach ($genres as $genre) {
+      $curl = curl_init("https://api.themoviedb.org/3/discover/movie?api_key=" . $this->key . "&language=fr-FR&sort_by=vote_average.desc&include_adult=false&include_video=false&page=1&with_genres=" . $genre->getGenreApiId());
+      curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+      $results = curl_exec($curl);
+      if (curl_error($curl)) {
+        var_dump(curl_error($curl));
+        return;
+      }
+
+      curl_close($curl);
+
+      $decoded = json_decode($results, true);
+      $bestOfEachGenre[$genre->getGenreName()] = $decoded['results'];
+    };
+
+    $this->view->render('best_rated.html.twig', [
+      "genres" => $genres,
+
+      "top" => [
+        "western" => $bestOfEachGenre['Western'],
+        "guerre" => $bestOfEachGenre['Guerre'],
+        "thriller" => $bestOfEachGenre['Thriller'],
+        "telefilm" => $bestOfEachGenre['Téléfilm'],
+        "sf" => $bestOfEachGenre['Science-Fiction'],
+        "romance" => $bestOfEachGenre['Romance'],
+        "mystere" => $bestOfEachGenre['Mystère'],
+        "musique" => $bestOfEachGenre['Musique'],
+        "horreur" => $bestOfEachGenre['Horreur'],
+        "histoire" => $bestOfEachGenre['Histoire'],
+        "fantastique" => $bestOfEachGenre['Fantastique'],
+        "familial" => $bestOfEachGenre['Familial'],
+        "drame" => $bestOfEachGenre['Drame'],
+        "documentaire" => $bestOfEachGenre['Documentaire'],
+        "crime" => $bestOfEachGenre['Crime'],
+        "animation" => $bestOfEachGenre['Animation'],
+        "aventure" => $bestOfEachGenre['Aventure'],
+        "action" => $bestOfEachGenre['Action']
+      ]
+    ]);
+  }
+
+  public function showMostPopular(): void
+  {
+    $curl = curl_init("https://api.themoviedb.org/3/discover/movie?api_key=" . $this->key . "&language=fr-FR&sort_by=popularity.desc&include_adult=false&include_video=false&page=1");
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+    $results = curl_exec($curl);
+    if (curl_error($curl)) {
+      var_dump(curl_error($curl));
+      return;
+    }
+
+    $decoded = json_decode($results, true);
+
+    $this->view->render("most_popular.html.twig", [
+      "films" => $decoded['results']
+    ]);
   }
 }

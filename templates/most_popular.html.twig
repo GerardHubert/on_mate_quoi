@@ -1,8 +1,8 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-	<section class="genres-results">
-		<h2>Les plus populaires en ce moment dans le genre "{{ genre.genreName }}"</h2>
+	<section class="most-popular-section">
+		<h2 class="most-popular-section-title">Les films les plus populaires du moment</h2>
 		<div class="results-container">
 			{% for film in films %}
 				<a href="http://localhost:8000?action=details&id={{film.id}}">

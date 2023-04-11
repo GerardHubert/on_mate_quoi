@@ -1,12 +1,71 @@
-{% include "base.html.twig" %}
+{% extends "base.html.twig" %}
 
 {% block content %}
-	<header class="film-details-section-header">
-		<div class="film-details-details">
-			<h1 class="film-details-title"></h1>
-			<span class="film-details-data"></span>
-			<p class="film-details-synopsis"></p>
-		</div>
-		<div class="film-details-poster"></div>
-	</header>
-{% endblock %}
+	<section class="film-details-section">
+		<header class="film-details-section-header">
+			<div class="film-details-container">
+				<h1 class="film-details-title">
+					{{ details.title }}
+				</h1>
+				<h4 class="film-details-original-title">
+					Titre original:
+					{{ details.original_title }}
+				</h4>
+				<div class="film-details-data">
+					<span class="director">Réalisateur :
+						{% for person in crew %}
+							{% if person.job == "Director" %}
+								{{ person.name }}
+							{% endif %}
+						{% endfor %}
+					</span>
+					<i class="fa-solid fa-circle-dot"></i>
+					<div class="genres-container">
+						{% for genre in details.genres %}
+							<span class="genre">{{ genre.name }}</span>
+						{% endfor %}
+					</div>
+					<i class="fa-solid fa-circle-dot"></i>
+					<span class="released">Sorti le
+						{{ details.release_date|date('d - m - Y') }}</span>
+				</div>
+				<p class="film-details-synopsis">{{ details.overview }}</p>
+				<div class="casting">
+					{% for actor in cast %}
+						{% if loop.index0 < 5 %}
+							<div class="cast-card">
+								{% if actor.profile_path != null %}
+									<img class="cast-image" src="https://image.tmdb.org/t/p/w200/{{ actor.profile_path }}" alt="poster de {{actor.name}}">
+								{% else %}
+									<div class="cast-image cast-image-null">
+										<div class='no-image-icon'>
+											<i class="fa-solid fa-camera"></i>
+											<span class="pipe">|</span>
+										</div>
+									</div>
+								{% endif %}
+								<span class="actor-name">{{ actor.name }}</span>
+								<span class="role">Role:
+									{{ actor.character }}</span>
+							</div>
+						{% endif %}
+					{% endfor %}
+				</div>
+			</div>
+			<div class="film-details-poster-container">
+				<img claass="film-details-poster" src="https://image.tmdb.org/t/p/w300/{{details.poster_path}}" alt {{details.title}}>
+			</div>
+		</header>
+		<div class="media-container">
+			<div class="youtube-player">
+				{% if lastTrailer is empty %}
+					<div class="video-not-found">
+						<img class='not-found-image' src="images/not-found.jpg" alt="pas de vidéos trouvées">
+						<span class='not-found-message'>Désolé, pas de vidéo trouvée pour ce film</span>
+					</div>
+				{% else %}
+					<iframe class='player' src="https://www.youtube.com/embed/{{lastTrailer.key}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+				{% endif %}
+			</div>
+		</section>
+	{% endblock %}

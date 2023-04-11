@@ -9,7 +9,7 @@
 			<div class="genre-select-widget">
 				<select class='genres-select' name="genres" id="genres-select">
 					{% for genre in genres %}
-						<option class='genres-select-option' value={{ genre.genre_api_id }}>{{ genre.name }}</option>
+						<option class='genres-select-option' value={{ genre.genreApiId }}>{{ genre.genreName }}</option>
 					{% endfor %}
 				</select>
 				<button class="genres-select-submit">Choisir</button>

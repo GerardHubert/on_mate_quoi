@@ -20,7 +20,7 @@ class GenreRepository
     $apiId = $genre->getGenreApiId();
 
     $query = $this->database->prepare(
-      "INSERT INTO genres (name, genre_api_id) VALUES (:name, :apiId)"
+      "INSERT INTO genres (name, genreApiId) VALUES (:name, :apiId)"
     );
 
     $query->bindParam(':name', $name);
@@ -39,7 +39,7 @@ class GenreRepository
   }
   public function findOneByApiId(int $id): ?Genre
   {
-    $request = $this->database->prepare("SELECT * FROM genres WHERE genre_api_id = :apiId");
+    $request = $this->database->prepare("SELECT * FROM genres WHERE genreApiId = :apiId");
     $request->bindParam(':apiId', $id);
     $request->setFetchMode(PDO::FETCH_CLASS, Genre::class);
     $request->execute();

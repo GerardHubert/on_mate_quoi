@@ -23,7 +23,7 @@ final class Genre
 
   public function getGenreApiId(): int
   {
-    return $this->genreApiId;
+    return (int) $this->genreApiId;
   }
 
   public function getGenreName(): string

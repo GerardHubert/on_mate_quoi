@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+	<section class="query-results">
+		<h1 class="query-section-title">Résultats de votere recherche</h1>
+		<div class="results-container">
+			{% if results %}
+				{% for result in results %}
+					{% if result.media_type == "movie" %}
+						<a href="http://localhost:8000?action=details&id={{result.id}}">
+							<div class="card-container">
+								{% if result.poster_path == null %}
+									<div class="card-image card-image-null">
+										<div class='no-image-icon'>
+											<i class="fa-solid fa-camera"></i>
+											<span class="pipe">|</span>
+										</div>
+									</div>
+								{% else %}
+									<img class="card-poster" src="https://image.tmdb.org/t/p/w200{{ result.poster_path }}" alt="affiche de {{ result.title }}">
+								{% endif %}
+								<div class="card-details">
+									<h3 class="card-film-title">{{ result.title }}</h3>
+									<div class="vote-average-container">
+										<span class="vote_average">{{ result.vote_average }}</span>
+									</div>
+									{# <i class="fa-solid fa-magnifying-glass"></i> #}
+								</div>
+							</div>
+						</a>
+					{% endif %}
+				{% endfor %}
+			{% else %}
+				<p class="no-result-message">Aucun film trouvé</p>
+			{% endif %}
+		</div>
+	</section>
+{% endblock %}
