@@ -44,7 +44,27 @@ final class Router
   public function run(): void
   {
     $route = $this->requests->get();
-    empty($route) ? $action = "home" : $action = $route["action"];
+    $url = $_SERVER["REQUEST_URI"];
+    $regex = '/\^?action=/';
+
+    // rediriger les url vers la page d'accueil
+    if (preg_match($regex, $url) === 0) {
+      $action = "home";
+    }
+
+    // s'il n'y a pas de paramètre, on envoie par défaut vers la page d'accueil
+    if (empty($route)) {
+      $action = "home";
+    }
+
+    // s'il y a des paramètres, mais qui ne commencent pas par "?action=" 
+    if (!empty($route) && preg_match($regex, $url) === 0) {
+      $action = "home";
+    };
+
+    if (!empty($route) && preg_match($regex, $url) === 1) {
+      $action = $route['action'];
+    }
 
     switch ($action) {
       case 'home':

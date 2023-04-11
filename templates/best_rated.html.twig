@@ -5,7 +5,7 @@
 		<h2 class="best-rated-section-title">Les films les mieux notés</h2>
 		{% for genre, film in top %}
 			<div class="genre-row">
-				<h3 class="genre-row-title">{{ genre.id }}</h3>
+				<h3 class="genre-row-title">{{ genre }}</h3>
 				{% for item in film %}
 					{% if loop.index0 < 7 %}
 						<a href="http://localhost:8000?action=details&id={{item.id}}">
