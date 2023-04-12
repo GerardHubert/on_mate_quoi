@@ -38,6 +38,14 @@
     background-color: white;
   }
 
+  .fa-bars,
+  .fa-bars::before {
+    font-size: 50px;
+    color: black;
+    align-self: center;
+    display: none;
+  }
+
   .nav-items-container {
     width: 80%;
     display: flex;
@@ -568,4 +576,155 @@
     top: 0;
     left: 0;
     border-radius: 5px;
+  }
+
+  @media screen and (max-width: 420px) {
+
+    .nav-items-container {
+      width: 95%;
+      position: relative;
+    }
+
+    .fa-bars,
+    .fa-bars::before {
+      display: block;
+    }
+
+    .nav-logo {
+      display: none
+    }
+
+    .search {
+      width: 60%;
+    }
+
+    .nav-link-wrapper {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 60%;
+      left: -10px;
+      bottom: -40px;
+      z-index: 5;
+      background-color: white
+    }
+
+    .invisible {
+      display: none;
+    }
+
+    header {
+      width: 97%;
+    }
+
+    .app-explanations {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    .genres-select-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      height: 100px;
+    }
+
+    .actual-films-section,
+    .results-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+
+    .film-details-section {
+      width: 100%;
+      height: 1600px;
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    .film-details-section-header {
+      height: 1200px;
+    }
+
+    .film-details-container {
+      width: 95%;
+      height: 1200px;
+    }
+
+    .media-container {
+      width: 95%;
+      height: 300px;
+      margin-bottom: 10px;
+    }
+
+    .film-details-data {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .fa-circle-dot::before {
+      display: none;
+    }
+
+    .casting {
+      flex-wrap: wrap;
+    }
+
+    .film-details-poster-container {
+      display: none;
+    }
+
+    .casting {
+      height: 100%;
+      justify-content: space-evenly;
+    }
+
+    .cast-card {
+      margin-bottom: 20px;
+    }
+
+    .genres-results {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .genre-row {
+      width: 95%;
+      display: flex;
+      justify-content: flex-start;
+      overflow-X: scroll;
+    }
+
+    .genre-row-title {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      z-index: 5;
+      transform: translateX(-50%);
+    }
+
+    .card-top-rated {
+      width: 120px;
+      margin-right: 10px;
+    }
+
+    footer {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .attribution {
+      flex-direction: column-reverse
+    }
+
+    .attribution-logo {
+      width: 50px;
+    }
+
   }
